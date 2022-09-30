@@ -28,15 +28,14 @@ node* insert(node *root,int data)
     }
     return root;
 }
-vector<node*> v1,v2;
-
+vector<int> v1,v2;
 void leftview(node *root,int level,int *maxlevel)
 {
     if(root==nullptr)
       return ;
     if(*maxlevel<level)
     {
-        v1.push_back(root);
+        v1.push_back(root->data);
         *maxlevel=level;
     }
     leftview(root->left,level+1,maxlevel);
@@ -48,7 +47,7 @@ void rightview(node *root,int level,int *maxlevel)
       return ;
     if(*maxlevel<level)
     {
-        v1.push_back(root);
+        v1.push_back(root->data);
         *maxlevel=level;
     }
     rightview(root->right,level+1,maxlevel);
@@ -62,7 +61,7 @@ void inorder(node *root)
     inorder(root->left);
     if(root->left==NULL && root->right==NULL)
     {
-        v2.push_back(root);
+        v2.push_back(root->data);
     }
     inorder(root->right);
 }
@@ -84,16 +83,15 @@ int main()
     leftview(root,1,&maxlevel);
     reverse(v1.begin(),v1.end());
     maxlevel=0;
-    rightview(root,1,&maxlevel);
-    v2.erase(v2.begin());
-    v2.erase(v2.end());
+    rightview(root->right,1,&maxlevel);
     for(auto i:v1)
     {
-        cout<<i->data<<" ";
+        cout<<i<<" ";
     }
-    for(auto i:v2)
+    reverse(v2.begin(),v2.end());
+    for(int i=1;i<v2.size()-1;i++)
     {
-        cout<<i->data<<" ";
+        cout<<v2[i]<<" ";
     }
     
 }
