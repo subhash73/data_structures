@@ -1,0 +1,99 @@
+#include<bits/stdc++.h>
+using namespace std;
+class node
+{
+    public:
+       int data;
+       node *left,*right;
+       node(int data)
+       {
+           this->data=data;
+           this->left=nullptr;
+           this->right=nullptr;
+       }
+};
+node* insert(node *root,int data)
+{
+    if(!root)
+    {
+        return new node(data);
+    }
+    if(data < root->data)
+    {
+        root->left=insert(root->left,data);
+    }
+    else if(data>root->data)
+    {
+        root->right=insert(root->right,data);
+    }
+    return root;
+}
+vector<node*> v1,v2;
+
+void leftview(node *root,int level,int *maxlevel)
+{
+    if(root==nullptr)
+      return ;
+    if(*maxlevel<level)
+    {
+        v1.push_back(root);
+        *maxlevel=level;
+    }
+    leftview(root->left,level+1,maxlevel);
+    leftview(root->right,level+1,maxlevel);
+}
+void rightview(node *root,int level,int *maxlevel)
+{
+    if(root==nullptr)
+      return ;
+    if(*maxlevel<level)
+    {
+        v1.push_back(root);
+        *maxlevel=level;
+    }
+    rightview(root->right,level+1,maxlevel);
+    rightview(root->left,level+1,maxlevel);
+  
+}
+void inorder(node *root)
+{
+    if(root==NULL)
+       return ;
+    inorder(root->left);
+    if(root->left==NULL && root->right==NULL)
+    {
+        v2.push_back(root);
+    }
+    inorder(root->right);
+}
+int main()
+{
+    int ch;
+    int maxlevel=0;
+    node *root=nullptr;
+    while(true)
+    {
+        cin>>ch;
+        if(ch<1)
+           break;
+        else
+           root=insert(root,ch);
+    }
+    inorder(root);
+    cout<<endl;
+    leftview(root,1,&maxlevel);
+    reverse(v1.begin(),v1.end());
+    maxlevel=0;
+    rightview(root,1,&maxlevel);
+    v2.erase(v2.begin());
+    v2.erase(v2.end());
+    for(auto i:v1)
+    {
+        cout<<i->data<<" ";
+    }
+    for(auto i:v2)
+    {
+        cout<<i->data<<" ";
+    }
+    
+}
