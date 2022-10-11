@@ -1,0 +1,30 @@
+// You are using GCC
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int v,e;
+    int n,m,w;
+    string s;
+    cin>>v>>e>>s;
+    int adj[v+1][e+1]={0};
+    for(int i=0;i<v;i++)
+    {
+        cin>>n>>m>>w;
+        if(s=="no"){
+         adj[n][m]=w;
+         adj[m][n]=w;
+        }
+        else{
+            adj[n][m]=w;
+        }
+    }
+    for(int i=1;i<v+1;i++)
+    {
+        for(int j=1;j<e+1;j++)
+        {
+            cout<<adj[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
