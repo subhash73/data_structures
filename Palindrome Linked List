@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isPalindrome(ListNode* head)
+    {
+      ListNode *slow=head,*fast=head;
+      stack<int> s;
+      while(fast && fast->next)
+      {
+          fast=fast->next->next;
+          s.push(slow->val);
+          slow=slow->next;
+      }
+      if(fast) slow=slow->next;
+      while(!s.empty())
+      {
+          if(s.top()!=slow->val)
+              return false;
+          s.pop();
+          slow=slow->next;
+      }
+      return true;
+    }
+};
